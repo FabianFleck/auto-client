@@ -1,6 +1,12 @@
 server:
   port: 8088
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html  # Define o caminho do Swagger UI
+  api-docs:
+    path: /v3/api-docs  # Define o caminho para a documentação OpenAPI (JSON)
+
 spring:
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
