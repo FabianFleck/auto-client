@@ -1,6 +1,7 @@
 package br.com.auto.client.resource;
 
 import br.com.auto.client.model.request.ClientRequestDTO;
+import br.com.auto.client.model.request.ClientUpdateRequestDTO;
 import br.com.auto.client.model.response.ClientResponseDTO;
 import br.com.auto.client.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,7 +43,7 @@ public class ClientResource {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update client details", description = "Update existing client details by ID")
-    public ResponseEntity<ClientResponseDTO> updateClient(@PathVariable Long id, @RequestBody ClientRequestDTO clientDTO) {
+    public ResponseEntity<ClientResponseDTO> updateClient(@PathVariable Long id, @RequestBody ClientUpdateRequestDTO clientDTO) {
         return ResponseEntity.ok(clientService.updateClient(id, clientDTO));
     }
 

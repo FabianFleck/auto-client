@@ -5,11 +5,13 @@ import br.com.auto.client.error.exception.UnprocessableEntityException;
 import br.com.auto.client.mapper.ClientMapper;
 import br.com.auto.client.model.entity.ClientEntity;
 import br.com.auto.client.model.request.ClientRequestDTO;
+import br.com.auto.client.model.request.ClientUpdateRequestDTO;
 import br.com.auto.client.model.response.ClientResponseDTO;
 import br.com.auto.client.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -23,6 +25,10 @@ public class ClientService {
     }
 
     public ClientResponseDTO createClient(ClientRequestDTO clientRequestDTO) {
+        Optional<ClientEntity> byDocument = findByDocument(clientRequestDTO.getDocument());
+        if (byDocument.isPresent()) {
+            throw new UnprocessableEntityException("Client already exists with document: " + clientRequestDTO.getDocument());
+        }
         ClientEntity client = clientMapper.toEntity(clientRequestDTO);
         ClientEntity savedClient = clientRepository.save(client);
         return clientMapper.toDto(savedClient);
@@ -44,7 +50,7 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    public ClientResponseDTO updateClient(Long id, ClientRequestDTO clientRequestDTO) {
+    public ClientResponseDTO updateClient(Long id, ClientUpdateRequestDTO clientRequestDTO) {
         ClientEntity existingClient = findById(id);
 
         clientMapper.toDto(clientRequestDTO, existingClient);
@@ -55,6 +61,10 @@ public class ClientService {
     private ClientEntity findById(Long id) {
         return clientRepository.findById(id)
                 .orElseThrow(() -> new UnprocessableEntityException("Client not found with id: " + id));
+    }
+
+    private Optional<ClientEntity> findByDocument(String document) {
+        return clientRepository.findByDocument(document);
     }
 }
 
