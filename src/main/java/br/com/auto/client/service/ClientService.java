@@ -10,6 +10,7 @@ import br.com.auto.client.model.response.ClientResponseDTO;
 import br.com.auto.client.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +35,9 @@ public class ClientService {
         return clientMapper.toDto(savedClient);
     }
 
-    public List<ClientResponseDTO> getAll() {
-        return clientRepository.findAll()
-                .stream()
+    public List<ClientResponseDTO> getClients(Long id, String name, String document, LocalDate birthDate) {
+        List<ClientEntity> clients = clientRepository.findClientsByFilters(id, name, document, birthDate);
+        return clients.stream()
                 .map(clientMapper::toDto)
                 .toList();
     }

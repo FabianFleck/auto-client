@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -31,8 +32,12 @@ public class ClientResource {
 
     @GetMapping
     @Operation(summary = "Get all clients", description = "Retrieve a list of all clients")
-    public ResponseEntity<List<ClientResponseDTO>> getAll() {
-        return ResponseEntity.ok(clientService.getAll());
+    public ResponseEntity<List<ClientResponseDTO>> getAll(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String document,
+            @RequestParam(required = false) LocalDate birthDate) {
+        return ResponseEntity.ok(clientService.getClients(id, name, document, birthDate));
     }
 
     @GetMapping("/{id}")
