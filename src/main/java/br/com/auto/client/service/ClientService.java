@@ -1,6 +1,7 @@
 package br.com.auto.client.service;
 
 
+import br.com.auto.client.error.exception.UnprocessableEntityException;
 import br.com.auto.client.mapper.ClientMapper;
 import br.com.auto.client.model.entity.ClientEntity;
 import br.com.auto.client.model.request.ClientRequestDTO;
@@ -53,7 +54,7 @@ public class ClientService {
 
     private ClientEntity findById(Long id) {
         return clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
+                .orElseThrow(() -> new UnprocessableEntityException("Client not found with id: " + id));
     }
 }
 

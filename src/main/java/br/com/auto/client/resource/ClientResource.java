@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/client")
+@RequestMapping("/api/v1/client")
 @Tag(name = "Client API", description = "API to manage clients")
 public class ClientResource {
 
