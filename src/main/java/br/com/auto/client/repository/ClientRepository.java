@@ -19,5 +19,7 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
             "(:document IS NULL OR c.document = :document) AND " +
             "(:birthDate IS NULL OR c.birthDate = :birthDate)")
     List<ClientEntity> findClientsByFilters(Long id, String name, String document, LocalDate birthDate);
+
+    boolean existsByDocument(String document);
 }
 
